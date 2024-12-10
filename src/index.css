@@ -1,0 +1,9 @@
+.list-item {
+    cursor: pointer;
+    user-select: none;
+}
+
+.add-button {
+    background-color: transparent;
+    border-radius: 90px;
+}
