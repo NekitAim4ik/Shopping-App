@@ -7,3 +7,145 @@
     background-color: transparent;
     border-radius: 90px;
 }
+
+.App {
+    background-color: #202020;
+    width: 334px;
+    border-radius: 20px;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.Background {
+    background-color: #131313;
+    color: #D2C2C2;
+    align-content: center;
+}
+
+.add-item {
+    display: flex;
+    background-color: rgba(167, 132, 36, 0.4);
+    color: white;
+    border-radius: 20px;
+    border: 0px;
+    width: 137px;
+    height: 36px;
+    font-size: 16px;
+    font-weight: 400;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input {
+    background-color: rgba(14, 13, 13, 0.5);
+    border-radius: 20px;
+    border: 0px;
+    color: white;
+    height: 36px;
+}
+
+.circle {
+    width: 100px;
+    height: 100px; 
+    border-radius: 50%; 
+    overflow: hidden; 
+    margin: 0 auto;
+    color: rgba(160, 160, 160, 1);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.count { 
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+
+.Lists {
+    color: rgba(210, 194, 194, 1);
+    display: grid;
+    justify-content: center;
+    gap: 20px;
+}
+
+#add-list {
+    width: 124px;
+    height: 36px;
+    padding: 10px;
+    gap: 10px;
+    display: flex;
+    border-radius: 20px;
+    background-color: rgba(167, 132, 36, 0.4);
+    border: 0px;
+    justify-content: center;
+    color: white;
+    justify-self: right;
+}
+
+.List {
+    background-color: rgba(108, 102, 102, 0.1);
+    height: 52px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+}
+
+.App button {
+    width: 124px;
+    height: 36px;
+    padding: 10px;
+    gap: 10px;
+    display: flex;
+    border-radius: 20px;
+    background-color: rgba(167, 132, 36, 0.4);
+    border: 0px;
+    justify-content: center;
+    color: white;
+    justify-self: right;
+    text-decoration: none;
+}
+
+.list-button {
+    display: flex;
+}
+
+.inputs {
+    display: flex;
+    gap: 10px;
+}
+
+li {
+    background-color: rgba(108, 102, 102, 0.1);
+    margin-bottom: 10px;
+    border-radius: 20px;
+    list-style-type: none;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    gap: 10px;
+}
+
+li button {
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    justify-content: center;
+    display: grid;
+    padding: 0px;
+}

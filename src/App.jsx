@@ -1,97 +1,69 @@
-import React from 'react';
-import { useState } from 'react';
-import './index.css'
+import React, { useState } from 'react';
 
 function App() {
-    return (
-        <article>
-            <List />
-        </article>
-    )
-}
+  const items = [
+    { id: 1, name: 'Платье' },
+    { id: 2, name: 'Помидоры' },
+    { id: 3, name: 'Сыр' },
+    { id: 4, name: 'Хлеб' },
+  ];
 
-function List() {
+  const [checkedItems, setCheckedItems] = useState(Array(items.length).fill(false));
 
-    const [shopList, setShopList] = useState(Array());
-    const [changed, setChanged] = useState(Array());
-    const [style, setStyle] = useState(Array());
-    const [bought, setBought] = useState({bought: 0, total: 0});
+  const handleCheckboxChange = (index) => {
+    const newCheckedItems = [...checkedItems];
+    newCheckedItems[index] = !newCheckedItems[index];
+    setCheckedItems(newCheckedItems);
+  };
 
-    function handleButtonClick() {
-        const newShopList = shopList.slice();
-        const newChangedList = changed.slice();
-        const newStyle = style.slice();
-        let len = shopList.length;
-        newStyle.push({textDecoration: 'none'});
-        setStyle(newStyle);
-        newShopList.push(<Item title="Potato" style={style[len]} handleClick={() => handleItemClick(len)}/>);
-        newChangedList.push(false);
-        setShopList(newShopList);
-        handleBought(bought.bought, bought.total + 1);
-    }
+  const completedCount = checkedItems.filter(Boolean).length;
+  const totalCount = items.length;
 
-    function handleItemClick(i) {
-        handleStyle(i);
-        let total = bought.total;
-        let bought = bought.bought + 1;
-        setBought({bought: bought, total: total});
-    }
-
-    function handleStyle(i) {
-        const newChangedList = changed.slice();
-        newChangedList[i] = !newChangedList[i];
-        const newStyle = style.slice();
-        if (newChangedList[i]) {
-            newStyle[i] = {textDecoration: 'line-through'};
-        }
-        else {
-            newStyle[i] = {textDecoration: 'none'};
-        }
-        setChanged(newChangedList);
-        setStyle(newStyle);
-    }
-
-    function handleBought(bought, total) {
-        setBought({bought: bought, total: total});
-    }
-
-    return(
-        <article>
-            <h1>Куплено товаров: {bought.bought} / {bought.total}</h1>
-            <ul>{shopList}</ul>
-            <AddButton handleClick={handleButtonClick} />
-        </article>
-    )
-}
-
-function Item({title, style, handleClick}) {
-
-    const [state, setState] = useState({style: {textDecoration: 'none'}, isChanged: false});
-
-    function handleClick2() {
-        if (state.isChanged) {
-            setState({style: {textDecoration: 'none'}, isChanged: false})
-        }
-        else {
-            setState({style: {textDecoration: 'line-through'}, isChanged: true});
-        }
-    }
-
-    return (
-        <li>
-            <h2 style={style} className="list-item" onClick={handleClick}>
-                {title}
-            </h2>
-        </li>
-    )
-}
-
-function AddButton({handleClick}) {
-    return(
-        <button className='add-button' onClick={handleClick}>
-            +
-        </button>
-    )
+  return (
+    <div style={{ textAlign: 'center', backgroundColor: '#1e1e1e', color: '#ffffff', padding: '20px' }}>
+      <h1>Еженедельные покупки</h1>
+      <div style={{ position: 'relative', width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto' }}>
+        <svg width="100" height="100">
+          <circle
+            cx="50"
+            cy="50"
+            r="45"
+            stroke="lightgray"
+            strokeWidth="10"
+            fill="none"
+          />
+          <circle
+            cx="50"
+            cy="50"
+            r="45"
+            stroke="green"
+            strokeWidth="10"
+            fill="none"
+            strokeDasharray={`${(completedCount / totalCount) * 282} ${282}`}
+            style={{ transition: 'stroke-dasharray 0.5s ease' }}
+          />
+        </svg>
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '20px' }}>
+          {completedCount}/{totalCount}
+        </div>
+      </div>
+      <div style={{ marginTop: '20px' }}>
+        {items.map((item, index) => (
+          <div key={item.id} style={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
+            <input
+              type="checkbox"
+              checked={checkedItems[index]}
+              onChange={() => handleCheckboxChange(index)}
+            />
+            <span style={{ marginLeft: '10px' }}>{item.name}</span>
+          </div>
+        ))}
+      </div>
+      <button style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#b58d4a', color: '#fff', border: 'none', borderRadius: '5px' }}>
+        Добавить
+      </button>
+    </div>
+  );
 }
 
 export default App;

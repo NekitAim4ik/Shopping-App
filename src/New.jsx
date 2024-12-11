@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './index.css'
+import plus from './images/plus.svg';
 
 function App() {
   const [lists, setLists] = useState({});
@@ -11,6 +13,7 @@ function App() {
   const [editItemId, setEditItemId] = useState(null);
   const [editInputValue, setEditInputValue] = useState('');
   const [editQuantityValue, setEditQuantityValue] = useState('1'); // Строка для временного количества редактирования
+  const [showLists, setShowLists] = useState(false);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -136,20 +139,27 @@ function App() {
     setEditQuantityValue('1'); // Сброс количества после редактирования
   };
 
+  const returnList = () => {
+    setShowLists(!showLists);
+  }
+
   return (
+    <div className='Background'>
     <div className="App">
-      <h1>Мои покупочки</h1>
-      <button onClick={handleCreateList}>Создать новый список</button>
+      <button onClick={handleCreateList} id='add-list'><img src={plus} />Создать</button>
       <h2>Списки:</h2>
-      <ul>
+      <div className='Lists'>
         {Object.keys(lists).map((listId) => (
-          <li key={listId}>
+          <div className='List'>
             {editListId !== listId ? (
               <>
                 <span onClick={() => handleSwitchList(listId)}>
                   {currentListId === listId ? <strong>{listId}</strong> : listId}
                 </span>
-                <button onClick={() => handleEditList(listId)}>Редактировать</button>
+                <span></span>
+                <div className='list-button'>
+                  <button onClick={() => handleEditList(listId)}>Редактировать</button>
+                </div>
               </>
             ) : (
               <>
@@ -158,19 +168,55 @@ function App() {
                   value={editListName}
                   onChange={(e) => setEditListName(e.target.value)}
                 />
-                <button onClick={handleChangeListName}>Сохранить</button>
+                <span></span>
+                <div>
+                  <button onClick={handleChangeListName}>Сохранить</button>
+                </div>
               </>
             )}
-            <button onClick={() => handleDeleteList(listId)} style={{ marginLeft: '10px' }}>
-              Удалить
-            </button>
-          </li>
+            <div className='list-button'>
+              <button onClick={() => handleDeleteList(listId)} style={{ marginLeft: '10px' }}>
+                Удалить
+              </button>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
 
       {currentListId && (
-        <>
-          <p>Уже в корзине: {completedItems.size}/{lists[currentListId].length}</p>
+      <>
+      <div className='circle'>
+  <svg width="100" height="100">
+    <circle
+      cx="50"
+      cy="50"
+      r="45"
+      stroke="lightgray"
+      strokeWidth="10"
+      fill="none"
+    />
+    <circle
+      cx="50"
+      cy="50"
+      r="45"
+      stroke="green"
+      strokeWidth="10"
+      fill="none"
+      strokeDasharray={`${(completedItems.size / lists[currentListId].length) * 282} ${282}`}
+      style={{ transition: 'stroke-dasharray 0.5s ease' }}
+    />
+    <text 
+      x="50" 
+      y="55" 
+      fontSize="20" 
+      textAnchor="middle" 
+      fill="white"
+    >
+      {completedItems.size}/{lists[currentListId].length}
+    </text>
+  </svg>
+</div>
+        <div className='inputs'>
           <input
             type="text"
             value={inputValue}
@@ -183,7 +229,8 @@ function App() {
             onChange={handleQuantityChange}
             placeholder="Введите количество товара"
           />
-          <button onClick={handleAddItem}>Добавить</button>
+          </div>
+          <button onClick={handleAddItem} className='add-item'><img src={plus} />Добавить</button>
           <ul>
             {lists[currentListId].map((item) => (
               <li
@@ -210,8 +257,9 @@ function App() {
                 ) : (
                   <>
                     {item.value} ({item.quantity}) {/* отображаем количество */}
-                    <button onClick={(e) => { e.stopPropagation(); handleDeleteItem(item.id); }}>Удалить</button>
-                    <button onClick={(e) => { e.stopPropagation(); startEditItem(item.id, item.value, item.quantity); }}>Редактировать</button>
+                    <span></span>
+                    <button onClick={(e) => { e.stopPropagation(); handleDeleteItem(item.id); }} style={{textDecoration: 'none'}}>Удалить</button>
+                    <button onClick={(e) => { e.stopPropagation(); startEditItem(item.id, item.value, item.quantity); }} style={{textDecoration: 'none'}}>Редактировать</button>
                   </>
                 )}
               </li>
@@ -219,6 +267,7 @@ function App() {
           </ul>
         </>
       )}
+    </div>
     </div>
   );
 }
